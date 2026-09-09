@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generator CV </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="layout">
+
+  <section class="panel panel-form">
+    <header class="form-header">
+      <p class="eyebrow-free-title">Generator CV</p>
+      <p class="form-header__hint">Isi data di bawah, pratinjau di kanan akan berubah langsung.</p>
+    </header>
+
+    <form id="cv-form">
+      <fieldset>
+        <legend>Data diri</legend>
+
+        <label for="nama">Nama lengkap</label>
+        <input type="text" id="nama" name="nama" placeholder="Andik Dwi Saputra" required>
+
+        <label for="gelar">Peran / gelar singkat</label>
+        <input type="text" id="gelar" name="gelar" placeholder="Siswa SMA · Calon Web Developer">
+
+        <div class="field-row">
+          <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="nama@email.com">
+          </div>
+          <div>
+            <label for="telepon">Telepon</label>
+            <input type="text" id="telepon" name="telepon" placeholder="08xx-xxxx-xxxx">
+          </div>
+        </div>
+
+        <label for="lokasi">Lokasi</label>
+        <input type="text" id="lokasi" name="lokasi" placeholder="Kota, Provinsi">
+
+        <label for="kontak_lain">Kontak/tautan lain <span class="hint">(satu per baris)</span></label>
+        <textarea id="kontak_lain" name="kontak_lain" rows="2" placeholder="github.com/andik-alt&#10;instagram.com/nnndk__"></textarea>
+      </fieldset>
+
+      <fieldset>
+        <legend>Ringkasan</legend>
+        <label for="ringkasan" class="sr-only">Ringkasan singkat</label>
+        <textarea id="ringkasan" name="ringkasan" rows="3" placeholder="Siswa kelas 12 yang aktif membangun proyek web sekolah, tertarik pada pengembangan sistem informasi berbasis Python dan PHP."></textarea>
+      </fieldset>
+
+      <fieldset>
+        <legend>Pendidikan <span class="hint">(satu baris per entri)</span></legend>
+        <textarea id="pendidikan" name="pendidikan" rows="3" placeholder="SMA Negeri 1 — Kelas 12, 2023–sekarang&#10;SMP Negeri 2 — Lulus 2023"></textarea>
+      </fieldset>
+
+      <fieldset>
+        <legend>Pengalaman / proyek <span class="hint">(satu baris per entri)</span></legend>
+        <textarea id="pengalaman" name="pengalaman" rows="4" placeholder="Sistem Absensi Sekolah — PHP, MySQL, QR Code&#10;Sistem Stok & Penjualan BBM — Python, CSV&#10;Website Perpustakaan — HTML, CSS, JavaScript"></textarea>
+      </fieldset>
+
+      <fieldset>
+        <legend>Skill <span class="hint">(pisahkan dengan koma)</span></legend>
+        <textarea id="skill" name="skill" rows="2" placeholder="Python, PHP, MySQL, HTML, CSS, JavaScript, Git"></textarea>
+      </fieldset>
+
+      <button type="submit" class="btn-download">Unduh sebagai PDF</button>
+    </form>
+  </section>
+
+  <!-- ===== PREVIEW (kanan) ===== -->
+  <section class="panel panel-preview">
+    <div class="paper" id="preview">
+      <header class="paper__header">
+        <h1 id="p-nama">Nama Lengkap</h1>
+        <p id="p-gelar" class="paper__role"></p>
+        <p id="p-kontak" class="paper__contact"></p>
+      </header>
+
+      <section class="paper__section" id="s-ringkasan" hidden>
+        <h2>Ringkasan</h2>
+        <p id="p-ringkasan"></p>
+      </section>
+
+      <section class="paper__section" id="s-pendidikan" hidden>
+        <h2>Pendidikan</h2>
+        <ul id="p-pendidikan"></ul>
+      </section>
+
+      <section class="paper__section" id="s-pengalaman" hidden>
+        <h2>Pengalaman &amp; Proyek</h2>
+        <ul id="p-pengalaman"></ul>
+      </section>
+
+      <section class="paper__section" id="s-skill" hidden>
+        <h2>Skill</h2>
+        <ul class="skill-list" id="p-skill"></ul>
+      </section>
+    </div>
+  </section>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
