@@ -6,7 +6,7 @@
 <style>
   @page {
     size: A4;
-    margin: 16mm 18mm;
+    margin: 14mm 16mm;
   }
 
   * { box-sizing: border-box; }
@@ -14,62 +14,77 @@
   body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #1e293b;
-    font-size: 10pt;
+    font-size: 9.5pt;
     line-height: 1.5;
     margin: 0;
   }
 
-  /* Header Utama */
+  /* Header CV Modern */
   .header {
-    border-bottom: 2.5pt solid #0f766e;
-    padding-bottom: 10pt;
-    margin-bottom: 12pt;
+    border-bottom: 2pt solid #0f766e;
+    padding-bottom: 12pt;
+    margin-bottom: 14pt;
   }
 
   h1 {
     font-family: Georgia, serif;
-    font-size: 22pt;
+    font-size: 24pt;
     font-weight: 700;
     color: #0f172a;
-    margin: 0 0 3pt;
-    text-transform: capitalize;
+    margin: 0 0 4pt;
+    letter-spacing: -0.02em;
   }
 
   .role {
     color: #0f766e;
     font-weight: 600;
     font-size: 11pt;
-    margin: 0 0 6pt;
+    margin: 0 0 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
   }
 
-  .contact {
-    color: #64748b;
+  .contact-line {
+    color: #475569;
     font-size: 8.5pt;
     margin: 0;
-    line-height: 1.4;
+    line-height: 1.6;
   }
 
-  /* Seksi / Bagian */
+  .contact-item {
+    display: inline;
+  }
+
+  .contact-item:not(:last-child)::after {
+    content: " • ";
+    color: #0f766e;
+    font-weight: bold;
+    margin: 0 4pt;
+  }
+
+  /* Seksi Utama */
   section {
-    margin-top: 12pt;
+    margin-bottom: 14pt;
   }
 
   h2 {
     font-size: 9pt;
     font-weight: 700;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     color: #b8863b;
     margin: 0 0 6pt;
     text-transform: uppercase;
-    border-bottom: 0.75pt solid #e2e8f0;
-    padding-bottom: 3pt;
+    border-bottom: 0.75pt solid #cbd5e1;
+    padding-bottom: 2pt;
   }
 
   p {
-    margin: 0 0 6pt;
+    margin: 0;
     color: #334155;
+    text-align: justify;
   }
 
+  /* List & Items */
   ul { 
     margin: 0; 
     padding-left: 12pt; 
@@ -80,21 +95,23 @@
     color: #334155;
   }
 
-  /* Layout Skill Badge khusus PDF */
-  .skill-list {
-    list-style: none;
-    padding: 0;
+  li::marker {
+    color: #0f766e;
+  }
+
+  /* Skill Badge Styling */
+  .skill-container {
     margin-top: 4pt;
   }
 
-  .skill-list li {
+  .skill-badge {
     display: inline-block;
     background-color: #f1f5f9;
     color: #0f766e;
-    border: 0.5pt solid #cbd5e1;
+    border: 0.5pt solid #94a3b8;
     border-radius: 3pt;
     padding: 2.5pt 7pt;
-    margin: 0 4pt 5pt 0;
+    margin: 0 3pt 4pt 0;
     font-size: 8.5pt;
     font-weight: 600;
   }
@@ -109,13 +126,17 @@
     {% set kontak_items = [data.email, data.telepon, data.lokasi] + data.kontak_lain %}
     {% set kontak_items = kontak_items | select | list %}
     {% if kontak_items %}
-      <p class="contact">{{ kontak_items | join(" · ") }}</p>
+      <div class="contact-line">
+        {% for item in kontak_items %}
+          <span class="contact-item">{{ item }}</span>
+        {% endfor %}
+      </div>
     {% endif %}
   </div>
 
   {% if data.ringkasan %}
   <section>
-    <h2>Ringkasan</h2>
+    <h2>Ringkasan Profesional</h2>
     <p>{{ data.ringkasan }}</p>
   </section>
   {% endif %}
@@ -124,7 +145,9 @@
   <section>
     <h2>Pendidikan</h2>
     <ul>
-      {% for item in data.pendidikan %}<li>{{ item }}</li>{% endfor %}
+      {% for item in data.pendidikan %}
+        <li><strong>{{ item }}</strong></li>
+      {% endfor %}
     </ul>
   </section>
   {% endif %}
@@ -133,17 +156,21 @@
   <section>
     <h2>Pengalaman &amp; Proyek</h2>
     <ul>
-      {% for item in data.pengalaman %}<li>{{ item }}</li>{% endfor %}
+      {% for item in data.pengalaman %}
+        <li>{{ item }}</li>
+      {% endfor %}
     </ul>
   </section>
   {% endif %}
 
   {% if data.skill %}
   <section>
-    <h2>Skill</h2>
-    <ul class="skill-list">
-      {% for item in data.skill %}<li>{{ item }}</li>{% endfor %}
-    </ul>
+    <h2>Keahlian Utama</h2>
+    <div class="skill-container">
+      {% for item in data.skill %}
+        <span class="skill-badge">{{ item }}</span>
+      {% endfor %}
+    </div>
   </section>
   {% endif %}
 
