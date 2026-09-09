@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>{{ data.nama }} — CV</title>
+<style>
+  @page {
+    size: A4;
+    margin: 20mm 18mm;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: "Helvetica", "Arial", sans-serif;
+    color: #22252A;
+    font-size: 10.5pt;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 24pt;
+    font-weight: 600;
+    margin: 0 0 4pt;
+  }
+
+  .role {
+    color: #0A4F42;
+    font-weight: 600;
+    font-size: 11pt;
+    margin: 0 0 6pt;
+  }
+
+  .contact {
+    color: #5B5F66;
+    font-size: 9pt;
+    margin: 0 0 16pt;
+  }
+
+  section {
+    margin-top: 14pt;
+    padding-top: 10pt;
+    border-top: 1px solid #E3E1DA;
+  }
+
+  h2 {
+    font-size: 9.5pt;
+    letter-spacing: 0.02em;
+    color: #B8863B;
+    margin: 0 0 8pt;
+    text-transform: uppercase;
+  }
+
+  ul { margin: 0; padding-left: 14pt; }
+  li { margin-bottom: 4pt; }
+
+  .skill-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .skill-list li {
+    display: inline-block;
+    border: 1px solid #E3E1DA;
+    border-radius: 3px;
+    padding: 3pt 8pt;
+    margin: 0 6pt 6pt 0;
+    font-size: 9pt;
+  }
+</style>
+</head>
+<body>
+
+  <h1>{{ data.nama or "Nama Lengkap" }}</h1>
+  {% if data.gelar %}<p class="role">{{ data.gelar }}</p>{% endif %}
+
+  {% set kontak_items = [data.email, data.telepon, data.lokasi] + data.kontak_lain %}
+  {% set kontak_items = kontak_items | select | list %}
+  {% if kontak_items %}
+    <p class="contact">{{ kontak_items | join(" · ") }}</p>
+  {% endif %}
+
+  {% if data.ringkasan %}
+  <section>
+    <h2>Ringkasan</h2>
+    <p>{{ data.ringkasan }}</p>
+  </section>
+  {% endif %}
+
+  {% if data.pendidikan %}
+  <section>
+    <h2>Pendidikan</h2>
+    <ul>
+      {% for item in data.pendidikan %}<li>{{ item }}</li>{% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if data.pengalaman %}
+  <section>
+    <h2>Pengalaman &amp; Proyek</h2>
+    <ul>
+      {% for item in data.pengalaman %}<li>{{ item }}</li>{% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if data.skill %}
+  <section>
+    <h2>Skill</h2>
+    <ul class="skill-list">
+      {% for item in data.skill %}<li>{{ item }}</li>{% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+</body>
+</html>
